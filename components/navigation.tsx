@@ -18,8 +18,9 @@ export function Navigation() {
     <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? "glass" : "bg-transparent"}`}>
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          <div className="text-2xl font-bold gradient-text">KOOS ESTUDIO</div>
-
+        <div className="text-xl sm:text-xl md:text-2xl lg:text-2xl font-bold gradient-text">
+             KOOS ESTUDIO
+            </div>
           <div className="hidden md:flex items-center space-x-8">
             <a href="#inicio" className="text-foreground hover:text-primary transition-colors">
               Inicio

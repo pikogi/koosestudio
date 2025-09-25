@@ -27,12 +27,12 @@ export function HeroSection() {
 
       <div className="container mx-auto px-6 text-center relative z-10">
         <div className={`transition-all duration-1000 ${isVisible ? "animate-text-reveal" : "opacity-0"}`}>
-          <h1 className="text-5xl md:text-8xl font-bold mb-6 text-balance">
+          <h1 className="text-5xl sm:text-4xl md:text-6xl lg:text-8xl font-bold mb-6 text-balance">
             CREAMOS
             <br />
             <span className="text-[#B5CEA4]">EXPERIENCIAS</span>
             <br />
-            AUDIOVISUALES
+            MULTIMEDIA
           </h1>
         </div>
 
