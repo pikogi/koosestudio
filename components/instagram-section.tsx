@@ -35,7 +35,7 @@ export function InstagramSection() {
         </div>
 
         <div
-          className={`max-w-4xl mx-auto transition-all duration-1000 delay-500 ${isVisible ? "animate-fade-in-up" : "opacity-0"}`}
+          className={'<div className="opacity-0 animate-fade-in-up [animation-fill-mode:forwards]'}
         >
           <Card className="glass hover-lift">
             <CardContent className="p-8">

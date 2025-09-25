@@ -54,7 +54,7 @@ export function ServicesSection() {
     <section id="servicios" className="py-20 bg-secondary/50">
       <div className="container mx-auto px-6">
         <div
-          className={`text-center mb-16 transition-all duration-1000 ${isVisible ? "animate-text-reveal" : "opacity-0"}`}
+          className={'<div className="opacity-0 animate-fade-in-up [animation-fill-mode:forwards]'}
         >
           <h2 className="text-5xl font-bold mb-6 gradient-text">Nuestros Servicios</h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto text-pretty">
