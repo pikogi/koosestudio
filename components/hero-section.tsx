@@ -26,7 +26,7 @@ export function HeroSection() {
       </div>
 
       <div className="container mx-auto px-6 text-center relative z-10">
-        <div className={`transition-all duration-1000 ${isVisible ? "animate-text-reveal" : "opacity-0"}`}>
+        <div className={"animate-fade-in-up delay-500"}>
           <h1 className="text-5xl sm:text-4xl md:text-6xl lg:text-8xl font-bold mb-6 text-balance">
             CREAMOS
             <br />
@@ -36,7 +36,7 @@ export function HeroSection() {
           </h1>
         </div>
 
-        <div className={`transition-all duration-1000 delay-500 ${isVisible ? "animate-fade-in-up" : "opacity-0"}`}>
+        <div className={"animate-fade-in-up delay-500"}>
           <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto text-pretty">
             Somos una agencia especializada en producción audiovisual y modelos. Transformamos ideas en contenido visual
             impactante que conecta con tu audiencia.
@@ -44,7 +44,7 @@ export function HeroSection() {
         </div>
 
         <div
-          className={`flex flex-col sm:flex-row gap-4 justify-center transition-all duration-1000 delay-1000 ${isVisible ? "animate-fade-in-up" : "opacity-0"}`}
+          className={"animate-fade-in-up delay-500"}
         >
             <a href="#portfolio">
           <Button
