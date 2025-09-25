@@ -8,7 +8,7 @@ const portfolioItems = [
   {
     title: "Campaña Publicitaria - Marca de Moda",
     category: "Comercial",
-    image: "/fashion-commercial-video-production-behind-the-sce.jpg",
+    image: "/beli.JPG",
     description: "Producción completa para campaña de moda con modelos profesionales",
   },
   {
