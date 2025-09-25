@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   title: 'Koos Estudio',
   description: 'Hacemos producciones, creamos contenido.',
   generator: 'Koos Estudio',
+  icons: {
+    icon: "/favicon.ico",
+  },
 }
 
 export default function RootLayout({
