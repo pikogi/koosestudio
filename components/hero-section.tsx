@@ -26,7 +26,7 @@ export function HeroSection() {
       </div>
 
       <div className="container mx-auto px-6 text-center relative z-10">
-        <div className={`transition-all duration-1000 ${isVisible ? "animate-text-reveal" : "opacity-0"}`}>
+        <div className={'<div className="opacity-0 animate-fade-in-up [animation-fill-mode:forwards]'}>
           <h1 className="text-5xl sm:text-4xl md:text-6xl lg:text-8xl font-bold mb-6 text-balance">
             CREAMOS
             <br />
