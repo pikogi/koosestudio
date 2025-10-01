@@ -8,7 +8,7 @@ import Player from "@vimeo/player"
 
 const portfolioItems = [
   {
-    title: "Campaña Comercial - Chavas",
+    title: "Campaña Comercial - LPMMM",
     category: "Comercial",
     type: "image",
     src: "/havoc.jpg",
