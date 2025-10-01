@@ -1,16 +1,23 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 
 export function InstagramSection() {
   const [isVisible, setIsVisible] = useState(false)
+  const videoRef = useRef<HTMLVideoElement | null>(null)
+  const triedUserStartRef = useRef(false)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true)
+          const video = videoRef.current
+          if (video) {
+            video.muted = true
+            video.play().catch(() => {})
+          }
         }
       },
       { threshold: 0.1 },
@@ -20,6 +27,27 @@ export function InstagramSection() {
     if (section) observer.observe(section)
 
     return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    // Fallback: intentar reproducir en el primer gesto del usuario (requisito iOS/Safari en algunos contextos)
+    const onFirstUserInteraction = () => {
+      if (triedUserStartRef.current) return
+      triedUserStartRef.current = true
+      const video = videoRef.current
+      if (video) {
+        video.muted = true
+        video.play().catch(() => {})
+      }
+      document.removeEventListener('touchstart', onFirstUserInteraction)
+      document.removeEventListener('click', onFirstUserInteraction)
+    }
+    document.addEventListener('touchstart', onFirstUserInteraction, { passive: true })
+    document.addEventListener('click', onFirstUserInteraction, { passive: true })
+    return () => {
+      document.removeEventListener('touchstart', onFirstUserInteraction)
+      document.removeEventListener('click', onFirstUserInteraction)
+    }
   }, [])
 
   return (
@@ -54,11 +82,12 @@ export function InstagramSection() {
         {/* Video */}
         <div className="flex justify-center">
           <video
+            ref={videoRef}
             controls
-            autoPlay
             muted
             loop
             playsInline
+            preload="metadata"
             className="w-full max-w-md rounded-2xl shadow-lg"
           >
             <source src="/video.mp4" type="video/mp4" />

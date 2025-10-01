@@ -4,13 +4,14 @@ import { useEffect, useState, useRef } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { useIsMobile } from "@/hooks/use-mobile"
+import Player from "@vimeo/player"
 
 const portfolioItems = [
   {
     title: "Campaña Comercial - Chavas",
     category: "Comercial",
     type: "video",
-    src: "https://drive.google.com/uc?export=download&id=1QNeKBVczdZtc8mWdNMLG37-Re1mUtk6G",
+    src: "/Chava2.mp4",
     description: "Producción completa para campaña de moda con modelos profesionales",
   },
   {
@@ -23,15 +24,15 @@ const portfolioItems = [
   {
     title: "Producción Audiovisual - Avante",
     category: "Musical",
-    type: "video",
-    src: "https://drive.google.com/uc?export=download&id=1QNeKBVczdZtc8mWdNMLG37-Re1mUtk6G",
+    type: "image",
+    src: "beli.JPG",
     description: "Producción audiovisual para artista emergente con efectos visuales",
   },
   {
-    title: "Campaña Comercial - Clases",
+    title: "Campaña BTL - SHEIN",
     category: "Digital",
-    type: "video",
-    src: "https://drive.google.com/uc?export=download&id=1QNeKBVczdZtc8mWdNMLG37-Re1mUtk6G",
+    type: "image",
+    src: "btl.jpg",
     description: "Serie de videos para campaña digital de marca de lifestyle",
   },
   {
@@ -54,34 +55,68 @@ type PortfolioItem = typeof portfolioItems[number]
 
 function PortfolioItemCard({ item, index, isVisible }: { item: PortfolioItem; index: number; isVisible: boolean }) {
   const videoRef = useRef<HTMLVideoElement | null>(null)
+  const vimeoRef = useRef<HTMLIFrameElement | null>(null)
   const isMobile = useIsMobile()
+  const vimeoPlayerRef = useRef<any>(null)
+  const [isVimeoPlaying, setIsVimeoPlaying] = useState(false)
 
   useEffect(() => {
-    if (item.type !== "video") return
-    const video = videoRef.current
-    if (!video) return
-    if (!isMobile) return
+    // Video local
+    if (item.type === "video" && videoRef.current && isMobile) {
+      let isPlaying = false
+      const handleIntersect: IntersectionObserverCallback = ([entry]) => {
+        const video = videoRef.current
+        if (!video) return
 
-    let isPlaying = false
-
-    const handleIntersect: IntersectionObserverCallback = ([entry]) => {
-      if (entry.isIntersecting && !isPlaying) {
-        isPlaying = true
-        video.play().catch(() => {
+        if (entry.isIntersecting && !isPlaying) {
+          isPlaying = true
+          video.play().catch(() => { isPlaying = false })
+        } else if (!entry.isIntersecting && isPlaying) {
           isPlaying = false
-        })
-      } else if (!entry.isIntersecting && isPlaying) {
-        isPlaying = false
+          video.pause()
+          video.currentTime = 0
+        }
+      }
+
+      const observer = new IntersectionObserver(handleIntersect, { threshold: 0.2 })
+      observer.observe(videoRef.current)
+      return () => observer.disconnect()
+    }
+
+    // Vimeo
+    if (item.type === "vimeo" && vimeoRef.current) {
+      vimeoPlayerRef.current = new Player(vimeoRef.current)
+      // Reiniciar al 0 cuando se pause
+      vimeoPlayerRef.current.on("pause", () => {
+        vimeoPlayerRef.current.setCurrentTime(0).catch(() => {})
+        setIsVimeoPlaying(false)
+      })
+    }
+  }, [item.type, isMobile])
+
+  const handleMouseEnter = () => {
+    if (item.type === "video") {
+      const video = videoRef.current
+      if (video && video.paused) video.play().catch(() => {})
+    }
+    if (item.type === "vimeo" && vimeoPlayerRef.current && !isVimeoPlaying) {
+      vimeoPlayerRef.current.play().then(() => setIsVimeoPlaying(true)).catch(() => {})
+    }
+  }
+
+  const handleMouseLeave = () => {
+    if (item.type === "video") {
+      const video = videoRef.current
+      if (video && !video.paused) {
         video.pause()
         video.currentTime = 0
       }
     }
-
-    const observer = new IntersectionObserver(handleIntersect, { threshold: 0.2 })
-    observer.observe(video)
-
-    return () => observer.disconnect()
-  }, [isMobile])
+    if (item.type === "vimeo" && vimeoPlayerRef.current && isVimeoPlaying) {
+      vimeoPlayerRef.current.pause().catch(() => {})
+      // Se reinicia al 0 gracias al listener de pause
+    }
+  }
 
   return (
     <Card
@@ -91,22 +126,11 @@ function PortfolioItemCard({ item, index, isVisible }: { item: PortfolioItem; in
       style={{ animationDelay: `${index * 150}ms` }}
     >
       <div
-        className="relative overflow-hidden"
-        onMouseEnter={item.type === "video" ? () => {
-          const video = videoRef.current
-          if (video && video.paused) {
-            video.play().catch(() => {})
-          }
-        } : undefined}
-        onMouseLeave={item.type === "video" ? () => {
-          const video = videoRef.current
-          if (video && !video.paused) {
-            video.pause()
-            video.currentTime = 0
-          }
-        } : undefined}
+        className="relative overflow-hidden aspect-video rounded-2xl"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
       >
-        {item.type === "video" ? (
+        {item.type === "video" && (
           <video
             ref={videoRef}
             muted
@@ -114,15 +138,32 @@ function PortfolioItemCard({ item, index, isVisible }: { item: PortfolioItem; in
             autoPlay={false}
             preload="metadata"
             playsInline
-            className="w-full h-64 object-cover"
+            className="w-full h-full object-cover rounded-2xl"
           >
             <source src={item.src} type="video/mp4" />
             Tu navegador no soporta el video.
           </video>
-        ) : (
-          <img src={item.src} alt={item.title} className="w-full h-64 object-cover" />
+        )}
+
+        {item.type === "vimeo" && (
+          <iframe
+            ref={vimeoRef}
+            src={`${item.src}&title=0&byline=0&portrait=0&controls=0&muted=1`}
+            width="100%"
+            height="100%"
+            frameBorder="0"
+            allow="autoplay; fullscreen; picture-in-picture"
+            allowFullScreen
+            className="rounded-2xl object-cover w-full h-full"
+            title={item.title}
+          ></iframe>
+        )}
+
+        {item.type === "image" && (
+          <img src={item.src} alt={item.title} className="w-full h-full object-cover rounded-2xl" />
         )}
       </div>
+
       <CardContent className="p-6">
         <h3 className="text-xl font-bold mb-2 text-foreground">{item.title}</h3>
       </CardContent>
