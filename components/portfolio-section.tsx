@@ -62,10 +62,16 @@ function PortfolioItemCard({ item, index, isVisible }: { item: PortfolioItem; in
     if (!video) return
     if (!isMobile) return
 
+    let isPlaying = false
+
     const handleIntersect: IntersectionObserverCallback = ([entry]) => {
-      if (entry.isIntersecting) {
-        video.play().catch(() => {})
-      } else {
+      if (entry.isIntersecting && !isPlaying) {
+        isPlaying = true
+        video.play().catch(() => {
+          isPlaying = false
+        })
+      } else if (!entry.isIntersecting && isPlaying) {
+        isPlaying = false
         video.pause()
         video.currentTime = 0
       }
@@ -86,10 +92,15 @@ function PortfolioItemCard({ item, index, isVisible }: { item: PortfolioItem; in
     >
       <div
         className="relative overflow-hidden"
-        onMouseEnter={item.type === "video" ? () => videoRef.current?.play() : undefined}
+        onMouseEnter={item.type === "video" ? () => {
+          const video = videoRef.current
+          if (video && video.paused) {
+            video.play().catch(() => {})
+          }
+        } : undefined}
         onMouseLeave={item.type === "video" ? () => {
           const video = videoRef.current
-          if (video) {
+          if (video && !video.paused) {
             video.pause()
             video.currentTime = 0
           }
