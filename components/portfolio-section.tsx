@@ -10,8 +10,8 @@ const portfolioItems = [
   {
     title: "Campaña Comercial - Chavas",
     category: "Comercial",
-    type: "video",
-    src: "/Chava2.mp4",
+    type: "image",
+    src: "/havoc.jpg",
     description: "Producción completa para campaña de moda con modelos profesionales",
   },
   {
