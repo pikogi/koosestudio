@@ -45,7 +45,7 @@ const portfolioItems = [
     title: "Casting de Modelos - Modelos",
     category: "Casting",
     type: "video",
-    src: "https://drive.google.com/uc?export=download&id=1QNeKBVczdZtc8mWdNMLG37-Re1mUtk6G",
+    src: "/video.mp4",
     description: "Sesión de casting para campaña internacional de belleza",
   },
 ]
