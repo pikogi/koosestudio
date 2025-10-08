@@ -68,7 +68,7 @@ export function ServicesSection() {
                 <h3 className="text-xl font-bold mb-3 text-foreground">{service.title}</h3>
                 <ul className="space-y-2">
                   {service.features.map((feature, idx) => (
-                    <li key={idx} className="text-sm text-muted-foreground flex items-center justify-center">
+                    <li key={idx} className="text-sm text-muted-foreground flex items-center ml-8">
                       <span className="w-2 h-2 bg-primary rounded-full mr-2"></span>
                       {feature}
                     </li>

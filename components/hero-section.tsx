@@ -14,9 +14,23 @@ export function HeroSection() {
   return (
     <section
       id="inicio"
-      className="min-h-screen flex items-center justify-center relative"
+      className="min-h-screen flex items-center justify-center relative overflow-hidden"
     >
-      {/* Background animated elements */}
+      {/* Video de fondo */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover"
+      >
+        <source src="/video.mp4" type="video/mp4" />
+        Tu navegador no soporta el video.
+      </video>
+
+      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/60"></div> {/* <-- aquí lo hacemos oscuro */}
+
+      {/* Fondo animado extra */}
       <div className="absolute inset-0 overflow-visible">
         <div className="absolute top-20 left-10 w-32 h-32 bg-primary/20 rounded-full blur-xl animate-float"></div>
         <div
@@ -29,10 +43,9 @@ export function HeroSection() {
         ></div>
       </div>
 
+      {/* Contenido */}
       <div className="container mx-auto px-6 text-center relative z-10">
-        <div
-          className={`${isVisible ? "animate-text-reveal" : "opacity-0"}`}
-        >
+        <div className={`${isVisible ? "animate-text-reveal" : "opacity-0"}`}>
           <h1 className="text-5xl sm:text-4xl md:text-6xl lg:text-8xl font-bold mb-6 text-balance">
             AGENCIA DE
             <br />
@@ -42,9 +55,7 @@ export function HeroSection() {
           </h1>
         </div>
 
-        <div
-          className={`${isVisible ? "animate-fade-in-up" : "opacity-0"}`}
-        >
+        <div className={`${isVisible ? "animate-fade-in-up" : "opacity-0"}`}>
           <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto text-pretty">
             Hacemos realidad tu visión de principio a fin, conectamos el talento adecuado para dar vida a tus campañas.
           </p>
@@ -77,4 +88,3 @@ export function HeroSection() {
     </section>
   )
 }
- 
