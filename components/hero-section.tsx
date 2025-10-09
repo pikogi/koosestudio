@@ -28,7 +28,11 @@ export function HeroSection() {
         Tu navegador no soporta el video.
       </video>
 
-      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/60"></div> {/* <-- aquí lo hacemos oscuro */}
+      {/* Capa general de oscurecimiento */}
+<div className="absolute inset-0 bg-black/40"></div>
+
+{/* Capa con foco oscuro en el centro */}
+<div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/70 to-transparent"></div>
 
       {/* Fondo animado extra */}
       <div className="absolute inset-0 overflow-visible">
@@ -56,7 +60,7 @@ export function HeroSection() {
         </div>
 
         <div className={`${isVisible ? "animate-fade-in-up" : "opacity-0"}`}>
-          <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto text-pretty">
+          <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto text-pretty text-white">
             Hacemos realidad tu visión de principio a fin, conectamos el talento adecuado para dar vida a tus campañas.
           </p>
         </div>

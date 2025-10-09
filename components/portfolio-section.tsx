@@ -98,7 +98,7 @@ function PortfolioItemMedia({ item, index, isVisible }: { item: PortfolioItem; i
           autoPlay={false}
           preload="metadata"
           playsInline
-          className="w-full h-full object-cover aspect-square"
+          className="w-full h-full object-cover aspect-[5/4]"
         >
           <source src={item.src} type="video/mp4" />
         </video>
@@ -113,13 +113,13 @@ function PortfolioItemMedia({ item, index, isVisible }: { item: PortfolioItem; i
           frameBorder="0"
           allow="autoplay; fullscreen; picture-in-picture"
           allowFullScreen
-          className="object-cover w-full h-full aspect-square"
+          className="object-cover w-full h-full aspect-[5/4]"
           title={item.title}
         />
       )}
 
       {item.type === "image" && (
-        <img src={item.src} alt={item.title} className="w-full h-full object-cover aspect-square" />
+        <img src={item.src} alt={item.title} className="w-full h-full object-cover aspect-[5/4]" />
       )}
 
       {/* Título */}
@@ -153,7 +153,7 @@ export function PortfolioSection() {
 
   return (
     <section id="portfolio" className="py-8 md:py-12 bg-black">
-      <div className="container mx-auto px-2 sm:px-4">
+      <div className="container mx-auto px-6 sm:px-4">
         <div className="text-center mb-8">
           <h2 className="text-4xl md:text-5xl font-bold gradient-text mb-3">Portfolio</h2>
           <p className="text-white text-sm md:text-base max-w-xl mx-auto">
@@ -161,7 +161,7 @@ export function PortfolioSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-1 sm:gap-2 md:gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-2 md:gap-3">
           {filteredItems.map((item, index) => (
             <PortfolioItemMedia key={index} item={item} index={index} isVisible={isVisible} />
           ))}
